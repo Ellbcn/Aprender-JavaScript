@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random user</title>
+
+    <style>
+        body{
+            margin: 0;
+            height: 100vh; /*es la altura de mi ventana, ocupa el 100% de la pantalla */
+            width: 100vw; /*es el ancho de mi ventana, ocupa el 100% de la pantalla */ 
+            background-color: cyan;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .user-image {
+            height:100px;
+            width: 100px;
+            object-fit: cover; /*adapta la imagen a las medidas que hemos puesto de height y width*/
+            border-radius: 50px; /*redondea la imagen*/
+
+        }
+
+        .main-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+
+        }
+
+    </style>
+
+
+
+</head>
+<body>
+
+    <div class="main-container">
+        <p id="user-name"></p>
+        <img class="user-image" src="./assets/user-image.jpg" src="./assets/user-test.jpg" alt="foto de usuario aleatoria"> 
+        
+        <!-- el ./indica que está al mismo nivel la carpeta y el alt con la descripción hace que sea accesible la web para la gente que no ve  -->
+
+    </div>
+    
+    <script>
+
+        let userTagName = document.getElementById('user-name'); /*para que el nombre que salga sea dinámico cogiendo de la api*/
+        let userTagImage = document.getElementById('user-image');
+
+        const getUser = async () => {
+            const response = await fetch('https://randomuser.me/api')
+                .then((res) => {
+                    return res.json()
+                        .then((r) => {
+                            return r
+                        })
+
+                        .catch((err) => {
+                            console.error(error)
+                        })
+                    })
+                .catch((error) => {
+                    console.error(error)
+                })
+            
+            debugger
+
+            return {            /*parsear->que me devuelva lo que yo quiero*/
+                name: response.results[0].name.first,
+                surname: '' + response.results[0].name.last,
+                photo: response.results[0].picture.large,
+            }
+        }
+        
+        
+        getUser()
+
+                    .then((res) => {
+                            
+                    userTagName.innerText = `${user.name} ${user.surname}`;
+                    userTagImage.src = `${user.photo}`;
+
+                    })
+
+                    .catch((error) => {
+                            console.error(error)
+                        })
+
+         
+
+      
+
+        /*async function sumar(a, b){
+            return a + b
+        }
+
+        const myFunction = async () => {
+
+        }
+
+        myFunction()
+
+        let getUser = fetch('')
+
+        const suma = (a, b) => {
+            return a + b
+        }
+
+        let variable = suma(3,3)
+
+        suma()
+            .then((respuesta)=> {
+                return respuesta.nombre
+            })
+            .catch((error)=> {
+                console.error(error)
+            })
+
+        let respuesta = suma().then((response) => { return response})
+
+
+        const getUser = async () => {
+        let user = fetch('https://randomuser.me/api/')
+
+            .then((resultado) => {
+                resultado.json()
+                .then((resultado) => {
+                    console.log(res)
+                    debugger
+                })
+
+                .catch((error) => {
+                    console.log(error)
+                    debugger
+                })
+            })
+
+            .catch((error) => {
+                console.error(error)
+                debugger
+            })
+        return user
+
+        }    
+
+
+        let user1 = getUser();
+        
+        let user2 = getUser();*/
+
+
+    </script>
+
+
+
+</body>
+
+</html>
